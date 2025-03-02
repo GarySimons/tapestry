@@ -1,3 +1,16 @@
+
+![01-gary-simons-time-blank](https://github.com/user-attachments/assets/9bd182bc-4f33-4d7c-8f0e-8650459d50e0)
+![02-gary-simons-time-filled](https://github.com/user-attachments/assets/52176fb8-ea7e-4467-a136-3cc4459e12c9)
+![03-gary-simons-time-checked](https://github.com/user-attachments/assets/bc3a058a-9536-41b1-a089-dfbcf256ece4)
+
+![04-gary-simons-time-picker](https://github.com/user-attachments/assets/985bf180-b46f-4c83-be3b-bba60ff00338)
+![05-gary-simons-time-error](https://github.com/user-attachments/assets/87cbabca-ca0c-46e5-9ff2-b82091fb9364)
+![06-gary-simons-time-saved](https://github.com/user-attachments/assets/235cf687-7025-45f2-898b-faa7df44e959)
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
