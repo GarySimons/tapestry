@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Dialog,
   DialogActions,
@@ -38,6 +38,20 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
     return dayjs(time).format("HH:mm");
   };
 
+  const isSaveButtonDisabled = useMemo(() => {
+    const requiredDays = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+    ];
+
+    return requiredDays.some(
+      (day) => !dayTimes[day]?.openTime || !dayTimes[day]?.closeTime
+    );
+  }, [dayTimes]);
+
   return (
     <div>
       <ButtonComponent
@@ -45,6 +59,7 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
         label="SAVE CHANGES"
         color="success"
         variant="contained"
+        disabled={isSaveButtonDisabled}
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle
@@ -109,10 +124,12 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
                   }}
                 >
                   <strong
-                  style={{
-                    color: "#ff9800",
-                  }}
-                  >{day}:</strong>
+                    style={{
+                      color: "#ff9800",
+                    }}
+                  >
+                    {day}:
+                  </strong>
                   {times.openTime
                     ? ` Open: ${formatTime(times.openTime)}`
                     : " Open: Not Set"}
@@ -146,6 +163,7 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
             label="SAVE"
             color="success"
             variant="contained"
+            disabled={isSaveButtonDisabled}
           />
         </DialogActions>
       </Dialog>
