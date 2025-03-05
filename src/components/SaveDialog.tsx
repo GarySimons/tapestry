@@ -1,14 +1,29 @@
-import React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
-import dayjs from 'dayjs'; 
+import React from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
+import dayjs from "dayjs";
+import ButtonComponent from "./Button";
+import DaisyImage from "../assets/daisy.png";
 
 interface SaveDialogProps {
   onSubmit: () => void;
-  dayTimes: { [key: string]: { openTime: string | null; closeTime: string | null } };
+  dayTimes: {
+    [key: string]: { openTime: string | null; closeTime: string | null };
+  };
 }
 
 const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
   const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -20,40 +35,114 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
   };
 
   const formatTime = (time: string | null) => {
-    if (!time) return 'Not Set'; 
-    return dayjs(time).format('HH:mm');
+    if (!time) return "Not Set";
+    return dayjs(time).format("HH:mm");
   };
 
   return (
     <div>
-      <Button variant="contained" onClick={() => setOpen(true)}>
-        Save
-      </Button>
+      <ButtonComponent
+        onClick={handleClickOpen}
+        label="SAVE CHANGES"
+        color="success"
+        variant="contained"
+      />
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Save Changes</DialogTitle>
-        <DialogContent>
-          <Typography variant="body1" gutterBottom>
-            Are you sure you want to save the following times?
+        
+        <DialogTitle
+          sx={{
+            fontFamily: "Chewy",
+            fontSize: "1.5rem",
+            lineHeight: "1.2",
+            fontWeight: "900",
+            textAlign: "center",
+            color: "#000000",
+            backgroundColor: "#31fd2d",
+          }}
+        >
+          Save Changes
+        </DialogTitle>
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#31fd2d",
+          }}
+        >
+                    <img
+              src={DaisyImage}
+              alt="Daisy"
+              style={{ width: "3rem", height: "auto", margin: "0 0 1rem 0", }}
+            />
+          <Typography
+            sx={{
+              fontSize: "1rem",
+              lineHeight: "1.2",
+              fontWeight: "500",
+              textAlign: "center",
+              color: "#000000",
+              marginBottom: "1rem",
+            }}
+          >
+            Are you sure you want to save the <br/>following times?
           </Typography>
-          <div>
+
+          <div
+            style={{
+              backgroundColor: "#ffffff",
+              padding: "1rem",
+              borderRadius: "0.5rem",
+              margin: "0 1rem",
+            }}
+          >
             {Object.entries(dayTimes).map(([day, times]) => (
               <div key={day}>
-                <Typography variant="body2" color="textSecondary">
-                  <strong>{day}:</strong> 
-                  {times.openTime ? ` Open: ${formatTime(times.openTime)}` : ' Open: Not Set'}, 
-                  {times.closeTime ? ` Close: ${formatTime(times.closeTime)}` : ' Close: Not Set'}
+                <Typography
+                  sx={{
+                    fontSize: "0.8rem",
+                    lineHeight: "1.6",
+                    fontWeight: "500",
+                    textAlign: "flex-start",
+                    color: "#000000",
+                  }}
+                >
+                  <strong>{day}:</strong>
+                  {times.openTime
+                    ? ` Open: ${formatTime(times.openTime)}`
+                    : " Open: Not Set"}
+                  ,
+                  {times.closeTime
+                    ? ` Close: ${formatTime(times.closeTime)}`
+                    : " Close: Not Set"}
                 </Typography>
               </div>
             ))}
           </div>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSave} color="primary">
-            Save
-          </Button>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0.5rem 0 1.25rem 0",
+            backgroundColor: "#31fd2d",
+            gap: "1rem",
+          }}
+        >
+          <ButtonComponent
+            onClick={handleClose}
+            label="CANCEL"
+            color="warning"
+            variant="contained"
+          />
+          <ButtonComponent
+            onClick={handleSave}
+            label="SAVE"
+            color="success"
+            variant="contained"
+          />
         </DialogActions>
       </Dialog>
     </div>
