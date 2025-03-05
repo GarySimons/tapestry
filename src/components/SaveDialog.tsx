@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -48,7 +47,6 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
         variant="contained"
       />
       <Dialog open={open} onClose={handleClose}>
-        
         <DialogTitle
           sx={{
             fontFamily: "Chewy",
@@ -58,6 +56,7 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
             textAlign: "center",
             color: "#000000",
             backgroundColor: "#31fd2d",
+            paddingTop: "2rem",
           }}
         >
           Save Changes
@@ -71,11 +70,11 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
             backgroundColor: "#31fd2d",
           }}
         >
-                    <img
-              src={DaisyImage}
-              alt="Daisy"
-              style={{ width: "3rem", height: "auto", margin: "0 0 1rem 0", }}
-            />
+          <img
+            src={DaisyImage}
+            alt="Daisy"
+            style={{ width: "2.5rem", height: "auto", margin: "0 0 1rem 0" }}
+          />
           <Typography
             sx={{
               fontSize: "1rem",
@@ -86,7 +85,8 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
               marginBottom: "1rem",
             }}
           >
-            Are you sure you want to save the <br/>following times?
+            Are you sure you want to save the <br />
+            following times?
           </Typography>
 
           <div
@@ -108,7 +108,11 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
                     color: "#000000",
                   }}
                 >
-                  <strong>{day}:</strong>
+                  <strong
+                  style={{
+                    color: "#ff9800",
+                  }}
+                  >{day}:</strong>
                   {times.openTime
                     ? ` Open: ${formatTime(times.openTime)}`
                     : " Open: Not Set"}
@@ -126,7 +130,7 @@ const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            padding: "0.5rem 0 1.25rem 0",
+            padding: "0.5rem 0 2rem 0",
             backgroundColor: "#31fd2d",
             gap: "1rem",
           }}
