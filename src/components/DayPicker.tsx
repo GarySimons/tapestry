@@ -5,9 +5,10 @@ import { Dayjs } from "dayjs";
 
 interface DayPickerProps {
   day: string;
+  onTimeChange: (day: string, openTime: string | null, closeTime: string | null) => void;
 }
 
-const DayPicker: React.FC<DayPickerProps> = ({ day }) => {
+const DayPicker: React.FC<DayPickerProps> = ({ day, onTimeChange }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [openTime, setOpenTime] = useState<Dayjs | null>(null);
   const [closeTime, setCloseTime] = useState<Dayjs | null>(null);
@@ -15,6 +16,9 @@ const DayPicker: React.FC<DayPickerProps> = ({ day }) => {
 
   const handleCheckboxChange = () => {
     setIsChecked((prev) => !prev);
+    if (!isChecked) {
+      onTimeChange(day, null, null);
+    }
   };
 
   const handleOpenTimeChange = (newTime: Dayjs | null) => {
@@ -25,6 +29,7 @@ const DayPicker: React.FC<DayPickerProps> = ({ day }) => {
       setError("Close time must be after open time");
     } else {
       setError(null);
+      onTimeChange(day, newTime?.toISOString() || null, closeTime?.toISOString() || null);
     }
   };
 
@@ -35,6 +40,7 @@ const DayPicker: React.FC<DayPickerProps> = ({ day }) => {
       setError("Close time must be after open time");
     } else {
       setError(null);
+      onTimeChange(day, openTime?.toISOString() || null, newTime?.toISOString() || null);
     }
     setCloseTime(newTime);
   };

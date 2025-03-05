@@ -1,91 +1,63 @@
-import * as React from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import ButtonComponent from "./Button";
-import { Typography } from "@mui/material";
-import DaisyImage from "../assets/daisy.png";
+import React from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import dayjs from 'dayjs'; 
 
-export default function SaveDialog() {
+interface SaveDialogProps {
+  onSubmit: () => void;
+  dayTimes: { [key: string]: { openTime: string | null; closeTime: string | null } };
+}
+
+const SaveDialog: React.FC<SaveDialogProps> = ({ onSubmit, dayTimes }) => {
   const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleSave = () => {
+    onSubmit();
+    handleClose();
+  };
+
+  const formatTime = (time: string | null) => {
+    if (!time) return 'Not Set'; 
+    return dayjs(time).format('HH:mm');
+  };
+
   return (
-    <React.Fragment>
-      <ButtonComponent
-        onClick={handleClickOpen}
-        label="SAVE CHANGES"
-        color="success"
-        variant="contained"
-      />
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogContent
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#31fd2d",
-          }}
-        >
-          <DialogContentText
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}
-            id="alert-dialog-description"
-          >
-            <img
-              src={DaisyImage}
-              alt="Daisy"
-              style={{ width: "4rem", height: "auto" }}
-            />
-            <Typography
-              sx={{
-                fontSize: "1.3rem",
-                lineHeight: "1.2",
-                fontWeight: "900",
-                textAlign: "center",
-                color: "#000000",
-              }}
-            >
-              Your open and close <br />
-              times are now set
-            </Typography>
-          </DialogContentText>
+    <div>
+      <Button variant="contained" onClick={() => setOpen(true)}>
+        Save
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Save Changes</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" gutterBottom>
+            Are you sure you want to save the following times?
+          </Typography>
+          <div>
+            {Object.entries(dayTimes).map(([day, times]) => (
+              <div key={day}>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>{day}:</strong> 
+                  {times.openTime ? ` Open: ${formatTime(times.openTime)}` : ' Open: Not Set'}, 
+                  {times.closeTime ? ` Close: ${formatTime(times.closeTime)}` : ' Close: Not Set'}
+                </Typography>
+              </div>
+            ))}
+          </div>
         </DialogContent>
-        <DialogActions
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "0.5rem 0 1rem 0",
-            backgroundColor: "#31fd2d",
-          }}
-        >
-          <ButtonComponent
-            onClick={handleClose}
-            label="CLOSE"
-            color="success"
-            variant="contained"
-          />
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSave} color="primary">
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </div>
   );
-}
+};
+
+export default SaveDialog;
